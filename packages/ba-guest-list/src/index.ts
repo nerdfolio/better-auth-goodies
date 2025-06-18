@@ -36,17 +36,6 @@ export interface GuestListOptions {
 	// schema?: InferOptionSchema<typeof schema>
 }
 
-// const schema = {
-// 	user: {
-// 		fields: {
-// 			isAnonymous: {
-// 				type: "boolean",
-// 				required: false,
-// 			},
-// 		},
-// 	},
-// } satisfies AuthPluginSchema
-
 function formatName(name: string) {
 	return capitalize(name.replaceAll(/\s/g, ""))
 }

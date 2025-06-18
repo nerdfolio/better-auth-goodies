@@ -1,3 +1,96 @@
 # Better Auth Guest List
 Plugin to provide fixed guest list functionality. Intended use is for development testing and possibly demos with
 know login names, e.g. login as "Alice" or "Bob".
+
+You can use it for logging in by just typing a single-word name or binding that name to a UI button.
+
+The fixed guest list can be defined on the server-side with roles so this plugin
+can also be used for testing roles.
+
+As this plugin is only intended to be a temporary aid to development and demo, it does not add any field to the schema. Internally, the guest name is transformed into an email via a fixed template, e.g. `tom.onguestlist@emaildomain` and that is the way that user will be looked up.
+
+# Installation
+
+```console
+
+pnpm add @nerdfolio/ba-guest-list
+
+```
+
+# Usage
+
+## Server-side setup
+
+```typescript
+// auth.ts
+import { betterAuth } from "better-auth"
+import { guestList } from "@nerdfolio/ba-guest-list"
+
+export const auth = betterAuth({
+	...otherConfigs,
+	plugins: [
+		...otherPlugins,
+		guestList({
+			allowGuests: [
+				// can be array of names or array of {name: string, role?: comma-separated-string}
+				{ name: "Alice", role: "admin" },
+				{ name: "Bob", role: "user" },
+				{ name: "Charlie", role: "user" },
+			],
+			revealNames: true // whether the client can see this list (useful for demos)
+		})
+	],
+})
+
+```
+
+Options:
+
+ `allowGuests`: can be an array of names or array of `{name: string, role?: string}`. role uses better-auth convention as a comma-separated string of actual roles.
+
+ `revealNames`: is a boolean. When enabled, the client will be able to retrieve the guest names via `client.signIn.guestList.reveal()`. Names may also be returned in api errors during logins. When undefined or disabled, the `reveal()` endpoint will just return `null` and names will not be sent in error messages.
+
+ `emailDomainName`: optional. Internally this plugin generates a fake email based on the guest name. It detects the app's domain and use that for email generation. You can override that with this option.
+
+
+## Client-side setup
+
+```typescript
+
+import { guestListClient } from "@nerdfolio/ba-guest-list/client"
+
+export const authClient = createAuthClient({
+	plugins: [
+		guestListClient()
+	],
+})
+
+```
+
+## Signin
+
+```typescript
+
+// authClient is the better-auth client as defined in client-side setup
+// GUEST_NAME has to be in the list of names defined in server-side setup, otherwise login will fail
+authClient.signIn.guestList({
+	name: GUEST_NAME
+})
+```
+
+If you have enabled `revealNames` in your server-side setup, you can retrieve that list of names on the client side. This may be useful for creating demos with a fixed list of login names. The plugin will
+call a special fetch endpoint and returns either `null` or an array of name strings. When `revealNames` is undefined or false, it returns `null`.
+
+```typescript
+// just an async so you'll need to use it according to the way your frontend framework andles async
+
+const guestNames = await authClient.signIn.guestList.reveal()
+  .then(({ data, error: _e }) => data?.join(", "))
+)
+
+// for example, in Solidstart, you can retrieve this via createAsync
+const guestList = createAsync(async () =>
+	authClient.signIn.guestList.reveal().then(({ data, error: _e }) => data?.join(", "))
+)
+
+```

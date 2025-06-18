@@ -1,14 +1,24 @@
 {
-	"name": "ba-guest-list",
+	"name": "@nerdfolio/ba-guest-list",
 	"version": "0.0.1",
 	"description": "Similar to anonymous, but with a name that must be on a guest list. Useful for testing or demo with fixed logins",
-	"main": "dist/index.cjs",
-	"module": "dist/index.mjs",
-	"types": "dist/index.d.ts",
 	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		},
+		"./client": {
+			"types": "./dist/client.d.ts",
+			"import": "./dist/client.mjs",
+			"require": "./dist/client.cjs"
+		}
+	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "tsup-node"
+		"build": "tsup-node",
+		"prepare": "pnpm build"
 	},
 	"keywords": ["better-auth", "better-auth plugin", "guest login", "demo login"],
 	"author": "taivo@github",
