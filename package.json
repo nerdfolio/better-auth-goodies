@@ -2,7 +2,6 @@
 	"name": "better-auth-goodies",
 	"version": "0.1.1",
 	"description": "Remult ORM adapter for better-auth",
-	"license": "ISC",
 	"author": "taivo",
 	"private": true,
 	"type": "module",
@@ -15,9 +14,6 @@
 	"files": [
 		"dist"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"scripts": {
 		"test": "vitest run"
 	},
@@ -29,11 +25,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.0.0",
 		"@types/node": "catalog:",
-		"better-auth": "catalog:",
 		"tsup": "catalog:",
 		"vitest": "catalog:"
-	},
-	"peerDependencies": {
-		"better-auth": "catalog:"
 	}
 }
