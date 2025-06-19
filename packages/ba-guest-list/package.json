@@ -1,6 +1,6 @@
 {
 	"name": "@nerdfolio/ba-guest-list",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Similar to anonymous, but with a name that must be on a guest list. Useful for testing or demo with fixed logins",
 	"type": "module",
 	"exports": {
@@ -15,7 +15,14 @@
 		"build": "tsup-node",
 		"prepare": "pnpm build"
 	},
-	"keywords": ["better-auth", "better-auth plugin", "guest login", "demo login", "anonymous login", "auth testing"],
+	"keywords": [
+		"better-auth",
+		"better-auth plugin",
+		"guest login",
+		"demo login",
+		"anonymous login",
+		"auth testing"
+	],
 	"author": "taivo@github",
 	"license": "ISC",
 	"packageManager": "pnpm@10.12.1",
