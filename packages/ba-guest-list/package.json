@@ -1,6 +1,6 @@
 {
 	"name": "@nerdfolio/ba-guest-list",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Similar to anonymous, but with a name that must be on a guest list. Useful for testing or demo with fixed logins",
 	"type": "module",
 	"exports": {
@@ -8,11 +8,6 @@
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.cjs"
-		},
-		"./client": {
-			"types": "./dist/client.d.ts",
-			"import": "./dist/client.mjs",
-			"require": "./dist/client.cjs"
 		}
 	},
 	"scripts": {
@@ -28,7 +23,7 @@
 		"access": "public"
 	},
 	"devDependencies": {
-		"@types/lodash-es": "^4.17.12",
+		"@types/lodash-es": "catalog:",
 		"better-auth": "catalog:"
 	},
 	"peerDependencies": {

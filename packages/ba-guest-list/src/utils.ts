@@ -1,3 +1,5 @@
+import { capitalize } from "lodash-es"
+
 export function getOrigin(url: string) {
 	try {
 		const parsedUrl = new URL(url)
@@ -5,4 +7,8 @@ export function getOrigin(url: string) {
 	} catch (_error) {
 		return null
 	}
+}
+
+export function formatName(name: string) {
+	return capitalize(name.replaceAll(/\s/g, ""))
 }

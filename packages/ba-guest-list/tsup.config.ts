@@ -1,7 +1,7 @@
 import { type Options, defineConfig } from "tsup"
 
 const libCfg = {
-	entry: ["src/index.ts", "src/client.ts"],
+	entry: ["src/index.ts"],
 	splitting: false,
 	target: "node22",
 	format: ["esm", "cjs"],

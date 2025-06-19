@@ -64,7 +64,7 @@ Options:
 
 ```typescript
 
-import { guestListClient } from "@nerdfolio/ba-guest-list/client"
+import { guestListClient } from "@nerdfolio/ba-guest-list"
 
 export const authClient = createAuthClient({
 	plugins: [
