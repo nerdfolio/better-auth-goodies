@@ -13,7 +13,7 @@ THIS IS NOT MEANT FOR SECURE PRODUCTION APP!
 
 This plugin does not add any field to the schema as its intended use is temporary for testing and demos.
 
-Internally, the guest name is transformed into an email via a fixed template, e.g. `tom.onguestlist@emaildomain` and that is the way that user will be looked up.
+Internally, the guest name is transformed into an email via a fixed template, e.g. `tom.onguestlist@emaildomain` and that is the way users will be looked up.
 
 
 # Installation
