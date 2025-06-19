@@ -2,7 +2,7 @@ import type { BetterAuthPlugin } from "better-auth"
 import { APIError, createAuthEndpoint } from "better-auth/api"
 import { setSessionCookie } from "better-auth/cookies"
 import { z } from "zod/v4-mini"
-import { formatName, getOrigin } from "./utils"
+import { formatName, getHost } from "./utils"
 
 type GuestWithRole = {
 	name: string
@@ -121,7 +121,7 @@ export const guestList = (options?: GuestListOptions) => {
 					}
 
 					// generate email based the input name
-					const { emailDomainName = getOrigin(ctx.context.baseURL) } = options ?? {}
+					const { emailDomainName = getHost(ctx.context.baseURL) } = options ?? {}
 					const email = `${cleanedName.toLowerCase().replaceAll(/\s/g, "")}.onguestlist@${emailDomainName}`
 
 					const found = await ctx.context.internalAdapter.findUserByEmail(email)

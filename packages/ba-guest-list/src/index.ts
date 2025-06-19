@@ -1,2 +1,2 @@
-export { guestList, type GuestListOptions } from "./server"
 export { guestListClient } from "./client"
+export { type GuestListOptions, guestList } from "./server"
