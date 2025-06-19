@@ -2,7 +2,7 @@
 
 Plugin to provide fixed guest list login functionality for [better-auth](https://www.better-auth.com).
 
-Intended use is for development testing and possibly demos with known login names, e.g. login as "Alice" or "Bob". You can use it with a single-input form or binding a name to a submit button. Names are case insensitive.
+Intended use is for development testing and possibly demos with known login names, e.g. login as "Alice" or "Bob". You can use it with a single-input form or binding a name to a submit button. Names are single-word and case-insensitive.
 
 The fixed guest list is defined on the server-side with optional roles so this plugin can also be used for testing roles.
 You can optionally reveal the server guest list to the client (useful for demo login scenarios).
@@ -13,7 +13,7 @@ THIS IS NOT MEANT FOR SECURE PRODUCTION APP!
 
 This plugin does not add any field to the schema as its intended use is temporary for testing and demos.
 
-Internally, the guest name is transformed into an email via a fixed template, e.g. `tom.onguestlist@emaildomain` and that is the way that user will be looked up. For simplicity, the guest names are restricted to be 1-word names.
+Internally, the guest name is transformed into an email via a fixed template, e.g. `tom.onguestlist@emaildomain` and that is the way that user will be looked up.
 
 
 # Installation
