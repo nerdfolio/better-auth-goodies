@@ -42,7 +42,7 @@ export const auth = betterAuth({
 				{ name: "Bob", role: "user" },
 				{ name: "Charlie", role: "user" },
 			],
-			// optional; whether the client can see this list (useful for demos)
+			// optional: whether the client can see this list (useful for demos)
 			revealNames: true
 		})
 	],
