@@ -24,8 +24,6 @@ pnpm add @nerdfolio/ba-guest-list
 
 ```
 
-# Usage
-
 ## Server-side setup
 
 ```typescript
@@ -39,12 +37,13 @@ export const auth = betterAuth({
 		...otherPlugins,
 		guestList({
 			allowGuests: [
-				// can be array of names or array of {name: string, role?: comma-separated-string}
+				// required: can be array of names or array of {name: string, role?: comma-separated-string}
 				{ name: "Alice", role: "admin" },
 				{ name: "Bob", role: "user" },
 				{ name: "Charlie", role: "user" },
 			],
-			revealNames: true // whether the client can see this list (useful for demos)
+			// optional; whether the client can see this list (useful for demos)
+			revealNames: true
 		})
 	],
 })
@@ -74,22 +73,21 @@ export const authClient = createAuthClient({
 
 ```
 
-## Signin
+# Usage
 
 ```typescript
 
-// authClient is the better-auth client as defined in client-side setup
 // GUEST_NAME has to be in the list of names defined in server-side setup, otherwise login will fail
 authClient.signIn.guestList({
 	name: GUEST_NAME
 })
 ```
 
-If you have enabled `revealNames` in your server-side setup, you can retrieve that list of names on the client side. This may be useful for creating demos with a fixed list of login names. The plugin will
-call a special fetch endpoint and returns either `null` or an array of name strings. When `revealNames` is undefined or false, it returns `null`.
+If you have enabled `revealNames` in your server-side setup, you can retrieve that list of names on the client side via `signIn.guestList.reveal()`. This may be useful for creating demos with a fixed list of login names as client-side hints.
 
 ```typescript
-// just an async so you'll need to use it according to the way your frontend framework andles async
+// just an async so you'll need to use it according to the way
+// your frontend framework handles async
 
 const guestNames = await authClient.signIn.guestList.reveal()
   .then(({ data, error: _e }) => data?.join(", "))
