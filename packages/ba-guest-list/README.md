@@ -4,9 +4,10 @@ Plugin to provide fixed guest list login functionality for [better-auth](https:/
 
 Intended use is for development testing and possibly demos with known login names, e.g. login as "Alice" or "Bob". You can use it with a single-input form or binding a name to a submit button.
 
-The fixed guest list is defined on the server-side with optional roles so this plugin can also be used for testing roles. You can also set it up to
-allow the client access to the guest list (useful for demo login scenarios).
+The fixed guest list is defined on the server-side with optional roles so this plugin can also be used for testing roles.
+You can optionally reveal the server guest list to the client (useful for demo login scenarios).
 
+THIS IS NOT MEANT FOR SECURE PRODUCTION APP!
 
 # How It Works
 
