@@ -1,6 +1,6 @@
 {
 	"name": "@nerdfolio/ba-guest-list",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Similar to anonymous, but with a name that must be on a guest list. Useful for testing or demo with fixed logins",
 	"type": "module",
 	"exports": {
