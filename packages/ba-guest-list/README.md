@@ -1,13 +1,19 @@
 # Better Auth Guest List
-Plugin to provide fixed guest list functionality. Intended use is for development testing and possibly demos with
-know login names, e.g. login as "Alice" or "Bob".
 
-You can use it for logging in by just typing a single-word name or binding that name to a UI button.
+Plugin to provide fixed guest list login functionality for [better-auth](https://www.better-auth.com).
 
-The fixed guest list can be defined on the server-side with roles so this plugin
-can also be used for testing roles.
+Intended use is for development testing and possibly demos with known login names, e.g. login as "Alice" or "Bob". You can use it with a single-input form or binding a name to a submit button.
 
-As this plugin is only intended to be a temporary aid to development and demo, it does not add any field to the schema. Internally, the guest name is transformed into an email via a fixed template, e.g. `tom.onguestlist@emaildomain` and that is the way that user will be looked up.
+The fixed guest list is defined on the server-side with optional roles so this plugin can also be used for testing roles. You can also set it up to
+allow the client access to the guest list (useful for demo login scenarios).
+
+
+# How It Works
+
+This plugin does not add any field to the schema as its intended use is temporary for testing and demos.
+
+Internally, the guest name is transformed into an email via a fixed template, e.g. `tom.onguestlist@emaildomain` and that is the way that user will be looked up. For simplicity, the guest names are restricted to be 1-word names.
+
 
 # Installation
 
@@ -46,7 +52,7 @@ export const auth = betterAuth({
 
 Options:
 
- `allowGuests`: can be an array of names or array of `{name: string, role?: string}`. role uses better-auth convention as a comma-separated string of actual roles.
+ `allowGuests`: can be an array of names or array of `{name: string, role?: string}`. Role follows better-auth convention as a comma-separated string of actual roles.
 
  `revealNames`: is a boolean. When enabled, the client will be able to retrieve the guest names via `client.signIn.guestList.reveal()`. Names may also be returned in api errors during logins. When undefined or disabled, the `reveal()` endpoint will just return `null` and names will not be sent in error messages.
 
