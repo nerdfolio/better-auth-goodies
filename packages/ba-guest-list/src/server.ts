@@ -58,7 +58,7 @@ export const guestList = (options?: GuestListOptions) => {
 	return {
 		id: "guest-list",
 		endpoints: {
-			signInGuest: createAuthEndpoint(
+			signInGuestList: createAuthEndpoint(
 				"/sign-in/guest-list",
 				{
 					method: "POST",
