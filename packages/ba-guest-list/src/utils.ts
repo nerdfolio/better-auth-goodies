@@ -1,9 +1,9 @@
 import { capitalize } from "lodash-es"
 
-export function getHost(url: string) {
+export function getHostName(url: string) {
 	try {
 		const parsedUrl = new URL(url)
-		return parsedUrl.host
+		return parsedUrl.hostname
 	} catch (_error) {
 		return null
 	}
