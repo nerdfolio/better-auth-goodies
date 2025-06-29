@@ -67,7 +67,7 @@ export const guestList = (options?: GuestListOptions) => {
 					}),
 					metadata: {
 						openapi: {
-							description: "Sign in as a guest with name only",
+							description: "Sign in via a guest list",
 							responses: {
 								200: {
 									description: "Sign in as a guest successful",
@@ -76,13 +76,16 @@ export const guestList = (options?: GuestListOptions) => {
 											schema: {
 												type: "object",
 												properties: {
+													token: {
+														type: "string",
+														description:
+															"Session token for the authenticated session",
+													},
 													user: {
 														$ref: "#/components/schemas/User",
 													},
-													session: {
-														$ref: "#/components/schemas/Session",
-													},
 												},
+												required: ["token", "user"],
 											},
 										},
 									},
