@@ -1,9 +1,14 @@
 import { capitalize } from "lodash-es"
 
-export function getHostName(url: string) {
+export function parseEmailDomain(url: string) {
 	try {
-		const parsedUrl = new URL(url)
-		return parsedUrl.hostname
+		const { hostname } = new URL(url)
+		if (hostname === 'localhost') {
+			// email domain foo@localhost would fail format validation for some overly strict backends.
+			// It doesn't hurt to morph it here since this is dev-only
+			return 'localhost.example.com'
+		}
+		return hostname
 	} catch (_error) {
 		return null
 	}
