@@ -1,7 +1,7 @@
 import type { BetterAuthPlugin } from "better-auth"
 import { APIError, createAuthEndpoint } from "better-auth/api"
 import { setSessionCookie } from "better-auth/cookies"
-import { z } from "zod/v4-mini"
+import * as z from "zod/mini"
 import { formatName, parseEmailDomain } from "./utils"
 
 type GuestWithRole = {
@@ -138,8 +138,7 @@ export const guestList = (options?: GuestListOptions) => {
 								role: guestLookup[cleanedName].role,
 								createdAt: new Date(),
 								updatedAt: new Date(),
-							},
-							ctx
+							}
 						)
 						if (!newUser) {
 							throw ctx.error("INTERNAL_SERVER_ERROR", {
@@ -152,7 +151,7 @@ export const guestList = (options?: GuestListOptions) => {
 
 					const user = found ? found.user : await createNewUser()
 
-					const session = await ctx.context.internalAdapter.createSession(user.id, ctx, true)
+					const session = await ctx.context.internalAdapter.createSession(user.id, true)
 
 					if (!session) {
 						return ctx.json(null, {
