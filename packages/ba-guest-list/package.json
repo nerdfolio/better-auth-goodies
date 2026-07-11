@@ -15,7 +15,7 @@
 		"dist"
 	],
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "vitest run",
 		"build": "tsup-node",
 		"prepare": "pnpm build"
 	},
@@ -34,7 +34,8 @@
 	},
 	"devDependencies": {
 		"@types/lodash-es": "catalog:",
-		"better-auth": "catalog:"
+		"better-auth": "catalog:",
+		"vitest": "catalog:"
 	},
 	"peerDependencies": {
 		"better-auth": "catalog:"

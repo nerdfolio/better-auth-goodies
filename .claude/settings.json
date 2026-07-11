@@ -18,7 +18,12 @@
 			"WebFetch(domain:raw.githubusercontent.com)",
 			"Bash(gh api *)",
 			"WebFetch(domain:www.better-auth.com)",
-			"Bash(gh --version)"
+			"Bash(gh --version)",
+			"Bash(pnpm test *)",
+			"Bash(pnpm exec *)",
+			"Bash(echo \"tsc exit: $?\")",
+			"Bash(pnpm --filter @nerdfolio/ba-guest-list test)",
+			"mcp__serena__edit_memory"
 		],
 		"deny": ["Bash(*../*)", "Bash(cd ..)", "Bash(* */.ssh*)", "Bash(* */.aws*)"],
 		"additionalDirectories": ["/home/node"]

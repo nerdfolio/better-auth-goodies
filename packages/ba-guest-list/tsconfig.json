@@ -8,6 +8,7 @@
 		"esModuleInterop": true,
 		"allowJs": true,
 		"strict": true,
+		"skipLibCheck": true,
 		"noEmit": true,
 		"declaration": true,
 		"experimentalDecorators": true

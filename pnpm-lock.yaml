@@ -60,6 +60,9 @@ importers:
       better-auth:
         specifier: 'catalog:'
         version: 1.6.23(vitest@4.0.16(@types/node@25.0.3))
+      vitest:
+        specifier: 'catalog:'
+        version: 4.0.16(@types/node@25.0.3)
 
 packages:
 

@@ -14,6 +14,6 @@ Monorepo of better-auth extensions (pnpm workspaces). Root package `better-auth-
 - ESM-only source (`"type": "module"` everywhere); dual ESM/CJS only in build output.
 - Dependency versions pinned via pnpm catalog in `pnpm-workspace.yaml` (`catalog:` specifiers) — bump versions there, not in package.json.
 - `better-auth` is a peerDependency of plugins, devDependency for local dev.
-- No CI workflows, no test files yet (root `vitest run` exists but nothing to run).
+- No CI workflows. Tests: vitest projects — root `vitest.config.ts` (`projects: ["packages/*"]`) + per-package `vitest.config.ts`; tests colocated as `src/*.test.ts` (ba-guest-list: utils/server/client). Server plugin tests use `betterAuth` + `memoryAdapter` from `better-auth/adapters/memory` (NOT `getTestInstance` from better-auth/test — needs sqlite deps not installed).
 
 Stack/versions: `mem:tech_stack`. Dev/build/test commands: `mem:suggested_commands`. Style and code patterns: `mem:conventions`. Definition-of-done checks: `mem:task_completion`.
