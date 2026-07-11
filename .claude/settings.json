@@ -26,7 +26,8 @@
 			"mcp__serena__edit_memory",
 			"Bash(npm view *)",
 			"Bash(pnpm install *)",
-			"Bash(pnpm -r build)"
+			"Bash(pnpm -r build)",
+			"mcp__serena__get_diagnostics_for_file"
 		],
 		"deny": ["Bash(*../*)", "Bash(cd ..)", "Bash(* */.ssh*)", "Bash(* */.aws*)"],
 		"additionalDirectories": ["/home/node"]
