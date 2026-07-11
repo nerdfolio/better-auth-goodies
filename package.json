@@ -10,10 +10,6 @@
 		"better-auth plugin",
 		"better-auth utils"
 	],
-	"repository": "https://github.com/nerdfolio/remult-better-auth.git",
-	"files": [
-		"dist"
-	],
 	"scripts": {
 		"test": "vitest run"
 	},

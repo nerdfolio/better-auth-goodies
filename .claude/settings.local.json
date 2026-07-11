@@ -1,0 +1,18 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(pnpm --filter solid-autoform exec vitest run --reporter=verbose)",
+			"Bash(pnpm --filter solid-autoform exec tsc --noEmit)",
+			"Bash(pnpm --filter nerd-resume test)",
+			"Bash(pnpm --filter nerd-resume exec vitest run --reporter=verbose)",
+			"mcp__serena__get_diagnostics_for_file"
+		]
+	},
+	"enabledMcpjsonServers": ["serena"],
+	"enabledPlugins": {
+		"typescript-lsp@claude-plugins-official": true,
+		"claude-md-management@claude-plugins-official": true,
+		"feature-dev@claude-plugins-official": true
+	},
+	"enableAllProjectMcpServers": true
+}

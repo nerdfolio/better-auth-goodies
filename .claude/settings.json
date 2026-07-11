@@ -1,0 +1,106 @@
+{
+	"permissions": {
+		"allow": ["Edit(**/*.test.ts)", "Write(**/*.test.ts)", "Edit(**/*.test.tsx)", "Write(**/*.test.tsx)"],
+		"deny": ["Bash(*../*)", "Bash(cd ..)", "Bash(* */.ssh*)", "Bash(* */.aws*)"],
+		"additionalDirectories": ["/home/node"]
+	},
+	"hooks": {
+		"PostToolUse": [
+			{
+				"matcher": "Edit|Write",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "pnpm biome check --write $CLAUDE_FILE_PATHS 2>&1 | tail -20"
+					}
+				]
+			}
+		],
+		"PreToolUse": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "serena-hooks remind --client=claude-code"
+					}
+				]
+			},
+			{
+				"matcher": "mcp__serena__*",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "serena-hooks auto-approve --client=claude-code"
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-dangerous-git.sh"
+					}
+				]
+			},
+			{
+				"matcher": "Bash|Read|Glob|Grep",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/graphify-remind.sh"
+					}
+				]
+			}
+		],
+		"SessionStart": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "serena-hooks activate --client=claude-code"
+					}
+				]
+			}
+		],
+		"SessionEnd": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "serena-hooks cleanup --client=claude-code"
+					}
+				]
+			}
+		],
+		"SubagentStop": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/checkpoint-untracked.sh"
+					}
+				]
+			}
+		]
+	},
+	"enabledPlugins": {
+		"unit-test-generator@claude-code-plugins-plus": true,
+		"playwright@claude-plugins-official": true,
+		"context7@claude-plugins-official": true,
+		"skill-creator@claude-plugins-official": true,
+		"claude-code-setup@claude-plugins-official": true
+	},
+	"extraKnownMarketplaces": {
+		"claude-code-plugins-plus": {
+			"source": {
+				"source": "github",
+				"repo": "jeremylongshore/claude-code-plugins"
+			}
+		}
+	}
+}
