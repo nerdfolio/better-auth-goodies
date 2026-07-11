@@ -22,10 +22,10 @@ services:
     volumes:
       - claude-code-config:/home/node/.claude
       - ..:/workspace:cached
-      - node-modules-bagoodies:/workspace/node_modules
-      - pnpm-store-bagoodies:/pnpm/store
+      - node-modules:/workspace/node_modules
+      - pnpm-store:/pnpm/store
 
 volumes:
   claude-code-config:
-  node-modules-bagoodies:
-  pnpm-store-bagoodies:
+  node-modules:
+  pnpm-store:
