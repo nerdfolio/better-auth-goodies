@@ -13,7 +13,7 @@ catalogs:
       specifier: ^25.0.3
       version: 25.0.3
     better-auth:
-      specifier: 1.4.9
+      specifier: ^1.4.9
       version: 1.4.9
     lodash-es:
       specifier: ^4.17.22

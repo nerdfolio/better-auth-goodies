@@ -1,0 +1,6 @@
+{
+	"permissions": {
+		"defaultMode": "acceptEdits",
+		"deny": ["Bash(* */.ssh*)", "Bash(* */.aws*)"]
+	}
+}

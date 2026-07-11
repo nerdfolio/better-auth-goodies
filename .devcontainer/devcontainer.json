@@ -1,0 +1,45 @@
+{
+	"name": "Dev Container",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "jg",
+	"workspaceFolder": "/workspace",
+	"shutdownAction": "stopCompose",
+	"overrideCommand": false,
+
+	"remoteUser": "node",
+
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": "true",
+			"installOhMyZsh": "true",
+			"configureZshAsDefaultShell": "true"
+		}
+	},
+
+	"mounts": ["source=${localEnv:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind,readonly"],
+
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"remote.autoForwardPortsSource": "process"
+			},
+			"extensions": [
+				"anthropic.claude-code",
+				"biomejs.biome",
+				"eamodio.gitlens",
+				"github.vscode-github-actions",
+				"vitest.explorer",
+				"bradlc.vscode-tailwindcss",
+				"graphql.vscode-graphql",
+				"graphql.vscode-graphql-syntax",
+				"usernamehw.errorlens"
+			]
+		}
+	},
+
+	// Run shell commands right after the container initializes
+	"postCreateCommand": "sudo chown node:node /workspace/node_modules \"$npm_config_store_dir\" && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 pnpm install && mkdir -p ~/.claude && ([ -f ~/.claude/settings.json ] || cp .devcontainer/claude-settings.container.json ~/.claude/settings.json) && sudo sh -c 'rm -f /etc/sudoers.d/*; echo \"node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh\" > /etc/sudoers.d/node-firewall; chmod 0440 /etc/sudoers.d/node-firewall'",
+
+	// Re-establish the egress firewall on every container start (iptables rules don't persist)
+	"postStartCommand": "sudo /usr/local/bin/init-firewall.sh"
+}

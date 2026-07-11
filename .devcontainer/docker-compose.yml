@@ -1,0 +1,31 @@
+name: ba-goodies
+
+services:
+  jg:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    init: true
+    tty: true
+    # required by init-firewall.sh (iptables/ipset)
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    user: node
+    working_dir: /workspace
+    # Keep Claude Code's global config (.claude.json — workspace trust, per-project
+    # state) inside the persisted claude-code-config volume; by default it lives at
+    # ~/.claude.json, outside the volume, and is lost on rebuild.
+    environment:
+      CLAUDE_CONFIG_DIR: /home/node/.claude
+    volumes:
+      - claude-code-config:/home/node/.claude
+      - ..:/workspace:cached
+      - node-modules-bagoodies:/workspace/node_modules
+      - pnpm-store-bagoodies:/pnpm/store
+
+volumes:
+  claude-code-config:
+  node-modules-bagoodies:
+  pnpm-store-bagoodies:
