@@ -23,7 +23,9 @@
 			"Bash(pnpm exec *)",
 			"Bash(echo \"tsc exit: $?\")",
 			"Bash(pnpm --filter @nerdfolio/ba-guest-list test)",
-			"mcp__serena__edit_memory"
+			"mcp__serena__edit_memory",
+			"Bash(npm view *)",
+			"Bash(pnpm install *)"
 		],
 		"deny": ["Bash(*../*)", "Bash(cd ..)", "Bash(* */.ssh*)", "Bash(* */.aws*)"],
 		"additionalDirectories": ["/home/node"]

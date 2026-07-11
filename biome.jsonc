@@ -13,27 +13,27 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
 			"suspicious": {
-				"recommended": true
+				"preset": "recommended"
 				//"noConsole": "warn"
 			},
 			"style": {
-				"recommended": true,
+				"preset": "recommended",
 				"noProcessEnv": "error",
 				"useConsistentMemberAccessibility": "off"
 			},
 			"complexity": {
-				"recommended": true
+				"preset": "recommended"
 			},
 			"security": {
-				"recommended": true
+				"preset": "recommended"
 			},
 			"performance": {
-				"recommended": true
+				"preset": "recommended"
 			},
 			"correctness": {
-				"recommended": true,
+				"preset": "recommended",
 				"noUnusedImports": "error",
 				"noUnusedVariables": "error",
 				"noUnusedLabels": "error",
@@ -41,11 +41,11 @@
 				"useJsxKeyInIterable": "off"
 			},
 			"a11y": {
-				"recommended": true,
+				"preset": "recommended",
 				"useValidAnchor": "off"
 			},
 			"nursery": {
-				"recommended": true
+				"preset": "recommended"
 			}
 		}
 	},
