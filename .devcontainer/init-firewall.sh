@@ -59,6 +59,14 @@ iptables -A OUTPUT -m set --match-set allowed-domains dst -j ACCEPT
 iptables -A OUTPUT -j REJECT --reject-with icmp-port-unreachable  # fast-fail everything else
 iptables -P OUTPUT DROP                                           # backstop
 
+# The allowlist is IPv4-only (dig A records); deny all IPv6 egress so it can't bypass the filter
+ip6tables -P OUTPUT ACCEPT
+ip6tables -F OUTPUT
+ip6tables -A OUTPUT -o lo -j ACCEPT
+ip6tables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+ip6tables -A OUTPUT -j REJECT
+ip6tables -P OUTPUT DROP
+
 # Verify: known-bad must fail, known-good must connect
 curl -fsS --max-time 5 https://example.com >/dev/null 2>&1 \
 	&& { echo "VERIFY FAILED: example.com still reachable" >&2; exit 1; }
