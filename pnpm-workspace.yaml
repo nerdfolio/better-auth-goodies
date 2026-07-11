@@ -2,12 +2,12 @@ packages:
   - packages/*
 
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true
 
 catalog:
   tsup: ^8.5.1
   typescript: ^5.8.3
-  better-auth: ^1.4.9
+  better-auth: ^1.6.23
   vitest: ^4.0.16
   zod: ^4.2.1
   lodash-es: ^4.17.22

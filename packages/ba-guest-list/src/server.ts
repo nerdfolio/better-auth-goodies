@@ -1,4 +1,4 @@
-import type { BetterAuthPlugin } from "better-auth"
+import { type BetterAuthPlugin, defineErrorCodes } from "better-auth"
 import { APIError, createAuthEndpoint } from "better-auth/api"
 import { setSessionCookie } from "better-auth/cookies"
 import * as z from "zod/mini"
@@ -6,7 +6,10 @@ import { formatName, parseEmailDomain } from "./utils"
 
 type GuestWithRole = {
 	name: string
-	role: string //comma-separated string
+	/**
+	 * Comma-separated roles. Falls back to `defaultRole` when omitted or empty.
+	 */
+	role?: string
 }
 
 export interface GuestListOptions {
@@ -23,6 +26,14 @@ export interface GuestListOptions {
 	revealNames?: boolean
 
 	/**
+	 * Role assigned to guests that don't specify one on the guest list.
+	 * Only persisted if the app declares a `role` field on the user model
+	 * (e.g. via the admin plugin or `user.additionalFields`).
+	 * @default "user"
+	 */
+	defaultRole?: string
+
+	/**
 	 * Configure the domain name of the temporary email
 	 * address for the guest users in the database.
 	 * @default "baseURL"
@@ -31,23 +42,25 @@ export interface GuestListOptions {
 }
 
 export const guestList = (options?: GuestListOptions) => {
-	const ERROR_CODES = {
+	const ERROR_CODES = defineErrorCodes({
 		NAME_NOT_PROVIDED: "Guest name not provided",
 		NAME_NOT_ON_GUEST_LIST: "Your name is not on the guest list",
 		NAME_ONE_WORD_ONLY: "Please only use 1-word names",
 		FAILED_TO_CREATE_USER: "Failed to create user",
 		COULD_NOT_CREATE_SESSION: "Could not create session",
-	} as const
+	})
+
+	const defaultRole = options?.defaultRole ?? "user"
 
 	const guestLookup = Object.fromEntries(
 		(options?.allowGuests ?? [])
-			.map((entry) => (typeof entry === "string" ? { name: entry, role: "" } : entry))
+			.map((entry) => (typeof entry === "string" ? { name: entry, role: defaultRole } : entry))
 			.filter((entry) => !!entry && entry.name)
 			.map(({ name, role }) => [
 				formatName(name),
 				{
 					name: formatName(name),
-					role: (role ?? "")
+					role: (role || defaultRole)
 						.split(",")
 						.map((s) => s.trim())
 						.join(","),
@@ -78,8 +91,7 @@ export const guestList = (options?: GuestListOptions) => {
 												properties: {
 													token: {
 														type: "string",
-														description:
-															"Session token for the authenticated session",
+														description: "Session token for the authenticated session",
 													},
 													user: {
 														$ref: "#/components/schemas/User",
@@ -99,28 +111,26 @@ export const guestList = (options?: GuestListOptions) => {
 
 					if (!name) {
 						ctx.context.logger.error("Guest name not provided")
-						throw new APIError("UNAUTHORIZED", {
-							message: options?.revealNames
-								? `Guest name not provided. Try: ${JSON.stringify(Object.keys(guestLookup))}`
-								: ERROR_CODES.NAME_NOT_PROVIDED,
-						})
+						throw options?.revealNames
+							? new APIError("UNAUTHORIZED", {
+									message: `Guest name not provided. Try: ${JSON.stringify(Object.keys(guestLookup))}`,
+								})
+							: APIError.from("UNAUTHORIZED", ERROR_CODES.NAME_NOT_PROVIDED)
 					}
 
 					if (name.trim().split(/\s+/).length > 1) {
 						ctx.context.logger.error("For simplicity, only one word names are allowed")
-						throw new APIError("UNAUTHORIZED", {
-							message: ERROR_CODES.NAME_ONE_WORD_ONLY,
-						})
+						throw APIError.from("UNAUTHORIZED", ERROR_CODES.NAME_ONE_WORD_ONLY)
 					}
 
 					const cleanedName = formatName(name)
 
 					if (!guestLookup[cleanedName]) {
-						throw new APIError("UNAUTHORIZED", {
-							message: options?.revealNames
-								? `Name not on list. Try: ${JSON.stringify(Object.keys(guestLookup))}`
-								: ERROR_CODES.NAME_NOT_ON_GUEST_LIST,
-						})
+						throw options?.revealNames
+							? new APIError("UNAUTHORIZED", {
+									message: `Name not on list. Try: ${JSON.stringify(Object.keys(guestLookup))}`,
+								})
+							: APIError.from("UNAUTHORIZED", ERROR_CODES.NAME_NOT_ON_GUEST_LIST)
 					}
 
 					// generate email based the input name
@@ -130,20 +140,16 @@ export const guestList = (options?: GuestListOptions) => {
 					const found = await ctx.context.internalAdapter.findUserByEmail(email)
 
 					async function createNewUser() {
-						const newUser = await ctx.context.internalAdapter.createUser(
-							{
-								email,
-								emailVerified: false,
-								name: cleanedName,
-								role: guestLookup[cleanedName].role,
-								createdAt: new Date(),
-								updatedAt: new Date(),
-							}
-						)
+						const newUser = await ctx.context.internalAdapter.createUser({
+							email,
+							emailVerified: false,
+							name: cleanedName,
+							role: guestLookup[cleanedName].role,
+							createdAt: new Date(),
+							updatedAt: new Date(),
+						})
 						if (!newUser) {
-							throw ctx.error("INTERNAL_SERVER_ERROR", {
-								message: ERROR_CODES.FAILED_TO_CREATE_USER,
-							})
+							throw APIError.from("INTERNAL_SERVER_ERROR", ERROR_CODES.FAILED_TO_CREATE_USER)
 						}
 
 						return newUser
@@ -157,7 +163,7 @@ export const guestList = (options?: GuestListOptions) => {
 						return ctx.json(null, {
 							status: 400,
 							body: {
-								message: ERROR_CODES.COULD_NOT_CREATE_SESSION,
+								message: ERROR_CODES.COULD_NOT_CREATE_SESSION.message,
 							},
 						})
 					}

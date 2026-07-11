@@ -1,4 +1,4 @@
-import type { BetterAuthClientPlugin } from "better-auth"
+import type { BetterAuthClientPlugin } from "better-auth/client"
 import type { guestList } from "./server"
 
 export const guestListClient = () => {
