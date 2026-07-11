@@ -25,7 +25,8 @@
 			"Bash(pnpm --filter @nerdfolio/ba-guest-list test)",
 			"mcp__serena__edit_memory",
 			"Bash(npm view *)",
-			"Bash(pnpm install *)"
+			"Bash(pnpm install *)",
+			"Bash(pnpm -r build)"
 		],
 		"deny": ["Bash(*../*)", "Bash(cd ..)", "Bash(* */.ssh*)", "Bash(* */.aws*)"],
 		"additionalDirectories": ["/home/node"]
