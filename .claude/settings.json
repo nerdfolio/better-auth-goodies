@@ -7,7 +7,17 @@
       "Write(**/*.test.tsx)",
       "mcp__serena__onboarding",
       "mcp__serena__read_memory",
-      "mcp__serena__write_memory"
+      "mcp__serena__write_memory",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "WebSearch",
+      "WebFetch(domain:registry.npmjs.org)",
+      "WebFetch(domain:github.com)",
+      "mcp__plugin_context7_context7__query-docs",
+      "WebFetch(domain:better-auth.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(gh api *)",
+      "WebFetch(domain:www.better-auth.com)"
     ],
     "deny": [
       "Bash(*../*)",
