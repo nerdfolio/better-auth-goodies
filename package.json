@@ -1,6 +1,6 @@
 {
 	"name": "better-auth-goodies",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "packages to make life easier with better-auth",
 	"author": "taivo",
 	"private": true,
@@ -21,7 +21,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.3",
 		"@types/node": "catalog:",
-		"tsup": "catalog:",
 		"vitest": "catalog:"
 	}
 }

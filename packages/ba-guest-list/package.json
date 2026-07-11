@@ -1,23 +1,40 @@
 {
 	"name": "@nerdfolio/ba-guest-list",
-	"version": "0.1.2",
+	"version": "0.1.5",
 	"description": "Similar to anonymous, but with a name that must be on a guest list. Useful for testing or demo with fixed logins",
-	"repository": "https://github.com/nerdfolio/better-auth-goodies",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nerdfolio/better-auth-goodies.git",
+		"directory": "packages/ba-guest-list"
+	},
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.mjs",
-			"require": "./dist/index.cjs"
+			"import": {
+				"types": "./dist/index.d.mts",
+				"default": "./dist/index.mjs"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
 		}
 	},
 	"files": [
 		"dist"
 	],
 	"scripts": {
+		"build": "tsdown",
+		"dev": "tsdown --watch",
+		"clean": "rm -rf dist",
 		"test": "vitest run",
-		"build": "tsup-node",
-		"prepare": "pnpm build"
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check .",
+		"format": "biome check --write .",
+		"prepare": "pnpm build",
+		"prepublishOnly": "pnpm run lint && pnpm run typecheck && pnpm test"
 	},
 	"keywords": [
 		"better-auth",
@@ -29,12 +46,18 @@
 	],
 	"author": "taivo@github",
 	"license": "ISC",
+	"engines": {
+		"node": ">=22"
+	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"devDependencies": {
 		"@types/lodash-es": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
 		"better-auth": "catalog:",
+		"tsdown": "catalog:",
+		"typescript": "catalog:",
 		"vitest": "catalog:"
 	},
 	"peerDependencies": {

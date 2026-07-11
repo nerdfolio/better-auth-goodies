@@ -27,7 +27,11 @@
 			"Bash(npm view *)",
 			"Bash(pnpm install *)",
 			"Bash(pnpm -r build)",
-			"mcp__serena__get_diagnostics_for_file"
+			"mcp__serena__get_diagnostics_for_file",
+			"Bash(pnpm run *)",
+			"Bash(git checkout *)",
+			"WebFetch(domain:tsdown.dev)",
+			"Bash(pnpm dlx *)"
 		],
 		"deny": ["Bash(*../*)", "Bash(cd ..)", "Bash(* */.ssh*)", "Bash(* */.aws*)"],
 		"additionalDirectories": ["/home/node"]
